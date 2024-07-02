@@ -1,15 +1,15 @@
-import requests
-
-
-URL = 'https://heureka-hajus-ai-tools.koyeb.app/api/1/products/availability?products[0][id]=ABC123&products[0][count]=1'
-
+import urllib.request
+import json
 
 def handle(data):
-    response = requests.get(url=URL)
+    req = urllib.request.Request("https://reqres.in/api/users?page=1", method="GET")
+    req.add_header("User-Agent", "urllib-example/0.1")
+
+    f = urllib.request.urlopen(req, timeout=3)
 
     data["res"] = {
-        "code": response.status_code,
-        "body": response.json(),
+        "code": f.getcode(),
+        "body": json.loads(f.read()),
     }
 
     return data
